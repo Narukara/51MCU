@@ -1,0 +1,1 @@
+"..\hc\interrupt.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(..\h) DEBUG OBJECTEXTEND PRINT(.\Listings\interrupt.lst) OBJECT(.\Objects\interrupt.obj)

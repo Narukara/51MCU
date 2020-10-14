@@ -1,0 +1,58 @@
+C51 COMPILER V9.60.0.0   TIME                                                              08/05/2020 02:00:47 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TIME
+OBJECT MODULE PLACED IN .\Objects\time.obj
+COMPILER INVOKED BY: C:\Program Files\Keil\C51\BIN\C51.EXE ..\h\time.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\h) DEBUG OBJEC
+                    -TEXTEND PRINT(.\Listings\time.lst) OBJECT(.\Objects\time.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          
+   3          #include "type.h"
+   4          
+   5          void delay_ms(u16 t) {
+   6   1          u16 i, j;
+   7   1          for (i = t; i > 0; i--)
+   8   1              for (j = 112; j > 0; j--)
+   9   1                  ;
+  10   1      }
+  11          
+  12          void set_timer(bit which, bit gate, bit ct, bit m1, bit m0) {
+  13   1          u8 temp = gate;
+  14   1          temp <<= 1;
+  15   1          temp |= ct;
+  16   1          temp <<= 1;
+  17   1          temp |= m1;
+  18   1          temp <<= 1;
+  19   1          temp |= m0;
+  20   1          if (which) {
+  21   2              temp <<= 4;
+  22   2              TMOD = (TMOD & 0x0f) | temp;
+  23   2          } else {
+  24   2              TMOD = (TMOD & 0xf0) | temp;
+  25   2          }
+  26   1      }
+  27          
+  28          void start_timer(bit which, bit start_or_end) {
+  29   1          if (which) {
+  30   2              TR1 = start_or_end;
+  31   2          } else {
+  32   2              TR0 = start_or_end;
+  33   2          }
+  34   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     98    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       7
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

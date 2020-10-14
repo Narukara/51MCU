@@ -1,0 +1,117 @@
+C51 COMPILER V9.60.0.0   LCD1602A                                                          10/08/2020 23:37:53 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE LCD1602A
+OBJECT MODULE PLACED IN .\Objects\LCD1602A.obj
+COMPILER INVOKED BY: C:\Program Files\Keil\C51\BIN\C51.EXE ..\hc\LCD1602A.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\h) DEBUG 
+                    -OBJECTEXTEND PRINT(.\Listings\LCD1602A.lst) OBJECT(.\Objects\LCD1602A.obj)
+
+line level    source
+
+   1          #include "LCD1602A.h"
+   2          
+   3          #include "time.h"
+   4          
+   5          /*******************************
+   6           * Author: Narukara
+   7           * Last modified date: 2020/8/9
+   8           *******************************/
+   9          
+  10          sbit RS = P1 ^ 0;  // data = 1, command = 0
+  11          sbit RW = P1 ^ 1;  // read = 1,write = 0
+  12          sbit E = P2 ^ 5;   // enable
+  13          #define DB P0      // data IO
+  14          sbit DB0 = P0 ^ 0;
+  15          sbit DB1 = P0 ^ 1;
+  16          sbit DB2 = P0 ^ 2;
+  17          sbit DB3 = P0 ^ 3;
+  18          sbit DB4 = P0 ^ 4;
+  19          sbit DB5 = P0 ^ 5;
+  20          sbit DB6 = P0 ^ 6;
+  21          sbit DB7 = P0 ^ 7;
+  22          
+  23          u8 LCD1602A_read_status() {
+  24   1          u8 temp;
+  25   1          RS = 0;
+  26   1          RW = 1;
+  27   1          E = 1;
+  28   1          temp = DB;
+  29   1          E = 0;
+  30   1          return temp;
+  31   1      }
+  32          
+  33          u8 LCD1602A_is_busy() {
+  34   1          u8 status = LCD1602A_read_status();
+  35   1          return status & 0x80;
+  36   1      }
+  37          
+  38          void LCD1602A_wait() {
+  39   1          while (LCD1602A_is_busy())
+  40   1              ;
+  41   1      }
+  42          
+  43          // write command without busy check
+  44          void LCD1602A_write_command_d(u8 command) {
+  45   1          RS = 0;
+  46   1          RW = 0;
+  47   1          DB = command;
+  48   1          E = 1;
+  49   1          E = 0;
+  50   1      }
+  51          
+  52          void LCD1602A_write_command(u8 command) {
+  53   1          LCD1602A_wait();
+  54   1          LCD1602A_write_command_d(command);
+C51 COMPILER V9.60.0.0   LCD1602A                                                          10/08/2020 23:37:53 PAGE 2   
+
+  55   1      }
+  56          
+  57          u8 LCD1602A_read_data() {
+  58   1          u8 temp;
+  59   1          RS = 1;
+  60   1          RW = 1;
+  61   1          E = 1;
+  62   1          temp = DB;
+  63   1          E = 0;
+  64   1          return temp;
+  65   1      }
+  66          
+  67          void LCD1602A_write_data(u8 wdata) {
+  68   1          LCD1602A_wait();
+  69   1          RS = 1;
+  70   1          RW = 0;
+  71   1          DB = wdata;
+  72   1          E = 1;
+  73   1          E = 0;
+  74   1      }
+  75          
+  76          // call this function first
+  77          void LCD1602A_init() {
+  78   1          u8 t = 15;
+  79   1          E = 0;
+  80   1          while (t-- > 0) delay_1ms();
+  81   1          LCD1602A_write_command_d(DISPLAY_MODE_SET);
+  82   1          for (t = 5; t > 0; t--) delay_1ms();
+  83   1          LCD1602A_write_command_d(DISPLAY_MODE_SET);
+  84   1          for (t = 5; t > 0; t--) delay_1ms();
+  85   1          LCD1602A_write_command_d(DISPLAY_MODE_SET);
+  86   1          LCD1602A_write_command(DISPLAY_MODE_SET);
+  87   1          LCD1602A_write_command(DISPLAY_OFF);
+  88   1          LCD1602A_write_command(CLEAN_SCREEN);
+  89   1          LCD1602A_write_command(CURSOR_FORWARD);
+  90   1          LCD1602A_write_command(DISPLAY_ON_WITHOUT_CURSOR);
+  91   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    178    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       1
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

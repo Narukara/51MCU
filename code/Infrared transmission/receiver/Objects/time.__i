@@ -1,0 +1,1 @@
+"..\..\h\time.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(..\..\h) DEBUG OBJECTEXTEND PRINT(.\Listings\time.lst) OBJECT(.\Objects\time.obj)

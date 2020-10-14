@@ -1,0 +1,54 @@
+C51 COMPILER V9.60.0.0   INTERRUPT                                                         08/03/2020 22:50:46 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE INTERRUPT
+OBJECT MODULE PLACED IN .\Objects\interrupt.obj
+COMPILER INVOKED BY: C:\Program Files\Keil\C51\BIN\C51.EXE ..\..\h\interrupt.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\..\h) 
+                    -DEBUG OBJECTEXTEND PRINT(.\Listings\interrupt.lst) OBJECT(.\Objects\interrupt.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          
+   3          void set_all_interrupt(bit b) { EA = b; }
+   4          
+   5          void set_INT_interrupt(bit which, bit allow, bit priority, bit way) {
+   6   1          if (which) {
+   7   2              EX1 = allow;
+   8   2              PX1 = priority;
+   9   2              IT1 = way;
+  10   2          } else {
+  11   2              EX0 = allow;
+  12   2              PX0 = priority;
+  13   2              IT0 = way;
+  14   2          }
+  15   1      }
+  16          
+  17          void set_UART_interrupt(bit allow, bit priority) {
+  18   1          ES = allow;
+  19   1          PS = priority;
+  20   1      }
+  21          
+  22          void set_timer_interrupt(bit which, bit allow, bit priority) {
+  23   1          if (which) {
+  24   2              ET1 = allow;
+  25   2              PT1 = priority;
+  26   2          } else {
+  27   2              ET0 = allow;
+  28   2              PT0 = priority;
+  29   2          }
+  30   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     64    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----      10
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

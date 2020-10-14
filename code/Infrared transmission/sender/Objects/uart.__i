@@ -1,0 +1,1 @@
+"..\..\h\uart.c" OPTIMIZE (8,SPEED) BROWSE INCDIR(..\..\h) DEBUG OBJECTEXTEND PRINT(.\Listings\uart.lst) OBJECT(.\Objects\uart.obj)

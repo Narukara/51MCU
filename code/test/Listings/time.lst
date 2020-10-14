@@ -1,0 +1,159 @@
+C51 COMPILER V9.60.0.0   TIME                                                              10/08/2020 23:37:53 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TIME
+OBJECT MODULE PLACED IN .\Objects\time.obj
+COMPILER INVOKED BY: C:\Program Files\Keil\C51\BIN\C51.EXE ..\hc\time.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\h) DEBUG OBJE
+                    -CTEXTEND PRINT(.\Listings\time.lst) OBJECT(.\Objects\time.obj)
+
+line level    source
+
+   1          #include <REG51.H>
+   2          #include <intrins.h>
+   3          
+   4          #include "type.h"
+   5          
+   6          /*********************************
+   7           * Author: Narukara
+   8           * Last modified date: 2020/8/8
+   9           *
+  10           * only for:
+  11           *  STC89Cxx
+  12           *  STC89LExx
+  13           *  STC90Cxx
+  14           *  STC90LExx
+  15           *
+  16           *  @11.0592MHz
+  17           *********************************/
+  18          
+  19          void delay_5us() {}
+  20          
+  21          void delay_10us() {
+  22   1          u8 i;
+  23   1          i = 2;
+  24   1          while (--i)
+  25   1              ;
+  26   1      }
+  27          
+  28          void delay_100us() {
+  29   1          u8 i;
+  30   1          _nop_();
+  31   1          i = 43;
+  32   1          while (--i)
+  33   1              ;
+  34   1      }
+  35          
+  36          void delay_1ms() {
+  37   1          u8 i, j;
+  38   1          _nop_();
+  39   1          i = 2;
+  40   1          j = 199;
+  41   1          do {
+  42   2              while (--j)
+  43   2                  ;
+  44   2          } while (--i);
+  45   1      }
+  46          
+  47          void delay_10ms() {
+  48   1          u8 i, j;
+  49   1          i = 18;
+  50   1          j = 235;
+  51   1          do {
+  52   2              while (--j)
+  53   2                  ;
+  54   2          } while (--i);
+C51 COMPILER V9.60.0.0   TIME                                                              10/08/2020 23:37:53 PAGE 2   
+
+  55   1      }
+  56          
+  57          void delay_100ms() {
+  58   1          u8 i, j;
+  59   1          i = 180;
+  60   1          j = 73;
+  61   1          do {
+  62   2              while (--j)
+  63   2                  ;
+  64   2          } while (--i);
+  65   1      }
+  66          
+  67          void delay_1s() {
+  68   1          u8 i, j, k;
+  69   1          _nop_();
+  70   1          i = 8;
+  71   1          j = 1;
+  72   1          k = 243;
+  73   1          do {
+  74   2              do {
+  75   3                  while (--k)
+  76   3                      ;
+  77   3              } while (--j);
+  78   2          } while (--i);
+  79   1      }
+  80          
+  81          void delay_10s() {
+  82   1          u8 i, j, k;
+  83   1          _nop_();
+  84   1          i = 71;
+  85   1          j = 10;
+  86   1          k = 171;
+  87   1          do {
+  88   2              do {
+  89   3                  while (--k)
+  90   3                      ;
+  91   3              } while (--j);
+  92   2          } while (--i);
+  93   1      }
+  94          
+  95          void delay_100s() {
+  96   1          u8 i, j, k;
+  97   1          _nop_();
+  98   1          i = 189;
+  99   1          j = 97;
+ 100   1          k = 222;
+ 101   1          do {
+ 102   2              do {
+ 103   3                  while (--k)
+ 104   3                      ;
+ 105   3              } while (--j);
+ 106   2          } while (--i);
+ 107   1      }
+ 108          
+ 109          void set_timer(bit which, bit gate, bit ct, bit m1, bit m0) {
+ 110   1          u8 temp = gate;
+ 111   1          temp <<= 1;
+ 112   1          temp |= ct;
+ 113   1          temp <<= 1;
+ 114   1          temp |= m1;
+ 115   1          temp <<= 1;
+ 116   1          temp |= m0;
+C51 COMPILER V9.60.0.0   TIME                                                              10/08/2020 23:37:53 PAGE 3   
+
+ 117   1          if (which) {
+ 118   2              temp <<= 4;
+ 119   2              TMOD = (TMOD & 0x0f) | temp;
+ 120   2          } else {
+ 121   2              TMOD = (TMOD & 0xf0) | temp;
+ 122   2          }
+ 123   1      }
+ 124          
+ 125          void start_timer(bit which, bit start_or_end) {
+ 126   1          if (which) {
+ 127   2              TR1 = start_or_end;
+ 128   2          } else {
+ 129   2              TR0 = start_or_end;
+ 130   2          }
+ 131   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    150    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----       7
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

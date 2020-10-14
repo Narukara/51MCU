@@ -1,0 +1,89 @@
+C51 COMPILER V9.60.0.0   INFRARED                                                          08/04/2020 00:35:21 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE INFRARED
+OBJECT MODULE PLACED IN .\Objects\infrared.obj
+COMPILER INVOKED BY: C:\Program Files\Keil\C51\BIN\C51.EXE ..\..\h\infrared.c OPTIMIZE(8,SPEED) BROWSE INCDIR(..\..\h) D
+                    -EBUG OBJECTEXTEND PRINT(.\Listings\infrared.lst) OBJECT(.\Objects\infrared.obj)
+
+line level    source
+
+   1          #include "sbits.h"
+   2          #include "time.h"
+   3          #include "type.h"
+   4          #define rc P1_0  // receive
+   5          #define sc P1_1  // send
+   6          static const u16 unit_length = 2;
+   7          static const u16 extra = 1;
+   8          static const u16 duration = 1;
+   9          
+  10          static u8 mode;
+  11          
+  12          void infared_init(u8 mode_) {
+  13   1          /*
+  14   1          0 : send only
+  15   1          1 : receive only
+  16   1          2 : send and wait for reply
+  17   1          3 : receive and reply
+  18   1          4 : send with Check Digit and wait for reply
+  19   1          5 : receive and check, then reply
+  20   1          */
+  21   1          mode = mode_;
+  22   1          sc = 0;
+  23   1          rc = 1;
+  24   1      }
+  25          
+  26          void infared_send(u8 c) {
+  27   1          u8 i = 0;
+  28   1          sc = 1;
+  29   1          for (; i < 8; i++) {
+  30   2              delay_ms(unit_length);
+  31   2              sc = 0x80 & c;  //?
+  32   2              c <<= 1;
+  33   2          }
+  34   1          if (mode == 0) {
+  35   2              delay_ms(unit_length);
+  36   2              sc = 0;
+  37   2              delay_ms(duration);
+  38   2              return;
+  39   2          } else if (mode == 2) {
+  40   2              // todo:
+  41   2          } else if (mode == 4) {
+  42   2              // todo:
+  43   2          }
+  44   1      }
+  45          
+  46          void infared_receive(u8 *c) {
+  47   1          u8 i = 0;
+  48   1          while (rc)
+  49   1              ;
+  50   1          delay_ms(unit_length + extra);
+  51   1          for (; i < 8; i++) {
+  52   2              *c <<= 1;
+  53   2              *c |= (~rc & 0x01);
+  54   2              delay_ms(unit_length);
+C51 COMPILER V9.60.0.0   INFRARED                                                          08/04/2020 00:35:21 PAGE 2   
+
+  55   2          }
+  56   1          if (mode == 1) {
+  57   2              return;
+  58   2          } else if (mode == 3) {
+  59   2              // todo
+  60   2          } else if (mode == 5) {
+  61   2              // todo
+  62   2          }
+  63   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    149    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      7       6
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
