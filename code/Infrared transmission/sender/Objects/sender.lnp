@@ -1,8 +1,0 @@
-".\Objects\STARTUP.obj",
-".\Objects\main.obj",
-".\Objects\time.obj",
-".\Objects\infrared.obj",
-".\Objects\interrupt.obj",
-".\Objects\uart.obj" 
-TO ".\Objects\sender" 
-PRINT(".\Listings\sender.m51") RAMSIZE(256) 

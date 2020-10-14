@@ -1,5 +1,0 @@
-".\Objects\STARTUP.obj",
-".\Objects\main.obj",
-".\Objects\time.obj" 
-TO ".\Objects\motor" 
-PRINT(".\Listings\motor.m51") RAMSIZE(256) 

@@ -1,4 +1,0 @@
-".\Objects\STARTUP.obj",
-".\Objects\main.obj" 
-TO ".\Objects\keyboard" 
-PRINT(".\Listings\keyboard.m51") RAMSIZE(256) 

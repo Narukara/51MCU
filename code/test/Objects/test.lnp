@@ -1,7 +1,0 @@
-".\Objects\STARTUP.obj",
-".\Objects\main.obj",
-".\Objects\time.obj",
-".\Objects\uart.obj",
-".\Objects\LCD1602A.obj" 
-TO ".\Objects\test" 
-PRINT(".\Listings\test.m51") RAMSIZE(256) 
